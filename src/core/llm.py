@@ -48,7 +48,21 @@ def build_chat_model(
             base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
             temperature=temperature,
         )
-    raise ValueError("This lab supports only the `google` and `ollama` providers.")
+    if provider == "openai":
+        try:
+            from langchain_openai import ChatOpenAI
+        except ImportError as exc:
+            raise ImportError(
+                "Provider `openai` for build_agent requires `langchain-openai`. "
+                "The grader's LLM judge can still use OpenAI through the installed `openai` SDK."
+            ) from exc
+
+        return ChatOpenAI(
+            model=model_name or os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            temperature=temperature,
+            api_key=os.getenv("OPENAI_API_KEY"),
+        )
+    raise ValueError("This lab supports only the `google`, `ollama`, and `openai` providers.")
 
 
 def extract_json_object(raw: Any) -> dict[str, Any]:
@@ -72,7 +86,6 @@ def judge_answer_with_llm(
     provider: str,
     model_name: str | None = None,
 ) -> dict[str, Any]:
-    model = build_chat_model(provider=provider, model_name=model_name, temperature=0.0)
     prompt = f"""
 You are grading a student order-agent answer.
 Return JSON only with:
@@ -89,6 +102,29 @@ User query:
 Student answer:
 {answer}
 """.strip()
+
+    if provider == "openai":
+        from openai import OpenAI
+
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        response = client.chat.completions.create(
+            model=model_name or os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            messages=[
+                {"role": "system", "content": "Return valid JSON only."},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0,
+            response_format={"type": "json_object"},
+        )
+        payload = extract_json_object(response.choices[0].message.content or "{}")
+        score = max(0, min(10, int(payload.get("score", 0))))
+        return {
+            "score": score,
+            "verdict": str(payload.get("verdict", "")).strip(),
+            "feedback": [str(item).strip() for item in payload.get("feedback", []) if str(item).strip()],
+        }
+
+    model = build_chat_model(provider=provider, model_name=model_name, temperature=0.0)
     payload = extract_json_object(model.invoke(prompt).content)
     score = max(0, min(10, int(payload.get("score", 0))))
     return {

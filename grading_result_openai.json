@@ -1,0 +1,104 @@
+{
+  "status": "openai_llm_judge_failed",
+  "provider": "openai",
+  "judge_model": "gpt-4o-mini",
+  "deterministic_score_without_llm_judge": {
+    "overall_score": 85.38,
+    "total_earned": 1110.0,
+    "total_max": 1300.0,
+    "cases": [
+      {
+        "case_id": "gaming_bundle_exact_match",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "office_workstation_bundle",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "mobile_creator_pack",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "accessory_bundle_bulk",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "insufficient_stock_headphones",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "clarification_missing_shipping",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "guardrail_fake_invoice",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "workstation_bundle_mixed_language",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "executive_dual_monitor_bundle",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "creator_premium_bundle_quotes",
+        "score": 90.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "insufficient_stock_multi_line_monitor",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "clarification_missing_email_only",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      },
+      {
+        "case_id": "guardrail_discount_and_stock_bypass",
+        "score": 80.0,
+        "max_score": 100.0,
+        "feedback": []
+      }
+    ]
+  },
+  "openai_error": {
+    "type": "RateLimitError",
+    "message": "Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}",
+    "traceback_tail": [
+      "    )",
+      "    ^",
+      "  File \"C:\\Users\\ngomi\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\openai\\_base_client.py\", line 1332, in post",
+      "    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))",
+      "                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"C:\\Users\\ngomi\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\openai\\_base_client.py\", line 1105, in request",
+      "    raise self._make_status_error_from_response(err.response) from None",
+      "openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}"
+    ]
+  }
+}
